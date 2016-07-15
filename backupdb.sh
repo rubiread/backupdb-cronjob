@@ -1,14 +1,14 @@
 #!/bin/bash
 
 db_host=localhost
-db_name=database
+db_name=test
 db_user=root
-db_passwd=pass
+db_passwd=123
 
 ftp_host=remote_ip
 ftp_user=ftp_user_name
 ftp_passwd=ftp_password
-ftp_dir=/home/
+ftp_dir=/path/backup/
 
 
 backup_file_name=$(date +"%Y-%b-%d-%H:%M")_$db_name;
@@ -16,6 +16,7 @@ backup_file_name=$(date +"%Y-%b-%d-%H:%M")_$db_name;
 # DUMP DB
 # Add --routines for dump stored proceedures
 # Add --triggers  for dump triggers 
+
 
 mysqldump  -u$db_user -p$db_passwd $db_name > $backup_file_name.sql
 
@@ -29,4 +30,8 @@ bye
 EOT
 
 
-rm *_$db_name.sql
+rm *_$db_name.sql #Delete local backup file. 
+
+
+# remote server cron job to delete backup files older than 5 days 
+# 00 00 * * * user find /path/to/*_$db_name.sql -mtime +5 -exec rm {} \;
