@@ -34,4 +34,4 @@ rm *_$db_name.sql #Delete local backup file.
 
 
 # remote server cron job to delete backup files older than 5 days 
-# 00 00 * * * user find /path/to/*_$db_name.sql -mtime +5 -exec rm {} \;
+# 00 00 * * * /bin/find /path/to/files/*_$db_name.sql -type f -mtime +5 -exec rm -rf {} \;
