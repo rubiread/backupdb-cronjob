@@ -33,5 +33,9 @@ EOT
 rm *_$db_name.sql #Delete local backup file. 
 
 
+
+# remove via ssh 
+ ssh -i Nexus.pem ubuntu@23.22.108.59 "find /home/ubuntu/testdir/*_$db_name.sql -type f -mtime +5 -exec rm -rf {} \;"
+# Or 
 # remote server cron job to delete backup files older than 5 days 
 # 00 00 * * * /bin/find /path/to/files/*_$db_name.sql -type f -mtime +5 -exec rm -rf {} \;
